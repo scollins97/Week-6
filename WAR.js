@@ -54,3 +54,9 @@ class Player{
     }
 
 }
+
+//this is just testing that my deck fills and can be printed
+let deck = new Deck();
+deck.cards.forEach(element => {
+    console.log(element);
+});
