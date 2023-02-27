@@ -96,9 +96,12 @@ class Player{
     printScore() {
         Console.log(`${this.name} : ${this.score}`);
     }
+    listAllCards() {
+        this.hand.forEach(element => element.describe());
+    }
 
 }
-
+/*
 //this is just testing that my deck fills and can be printed
 let demoDeck = new Deck();
 demoDeck.fillDeck();
@@ -109,9 +112,25 @@ demoDeck.cards.forEach(element => console.log(element.suit));
 //testing that deck fills correctly and the list all function
 demoDeck.listAllCards();
 
-//start
+
 //let's get a new deck of cards and shuffle it
 let deck = new Deck();
 deck.fillDeck();
-//stopped here because i forget to add a shuffle function
+//stopped here because i forgot to add a shuffle function
 deck.listAllCards();
+
+//just a quick lil Math.Random test. It's all good 
+console.log(Math.floor(Math.random() * (11 - 1) + 1));
+*/
+
+//start of the main Process
+let player1 = new Player();
+let player2 = new Player();
+let deck = new Deck();
+deck.fillDeck();
+deck.listAllCards();
+for(i = 26; i >= 1; i --) {
+    player1.hand.push(deck.cards.splice((Math.floor(Math.random() * (deck.length - 1) + 1), 1)));
+    player2.hand.push(deck.cards.splice(i, 1));
+}
+player1.listAllCards();
