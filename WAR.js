@@ -90,47 +90,70 @@ class Player{
     getScore() {
         return this.score;
     }
+    scoreIncrementer(number) {
+        this.score += number;
+    }
     getName() {
         return this.name;
     }
     printScore() {
-        Console.log(`${this.name} : ${this.score}`);
+        console.log(`${this.name} : ${this.score}`);
     }
     listAllCards() {
         this.hand.forEach(element => element.describe());
     }
 
 }
-/*
-//this is just testing that my deck fills and can be printed
-let demoDeck = new Deck();
-demoDeck.fillDeck();
-//this currently just prints the values of the cards
-demoDeck.cards.forEach(element => console.log(element.value));
-//this just prints the suits... which means we'll have a lot of the same words on the console
-demoDeck.cards.forEach(element => console.log(element.suit));
-//testing that deck fills correctly and the list all function
-demoDeck.listAllCards();
-
-
-//let's get a new deck of cards and shuffle it
-let deck = new Deck();
-deck.fillDeck();
-//stopped here because i forgot to add a shuffle function
-deck.listAllCards();
-
-//just a quick lil Math.Random test. It's all good 
-console.log(Math.floor(Math.random() * (11 - 1) + 1));
-*/
+function getRandomSortValue() {
+    return Math.floor(Math.random() * (3 + 1) - 2);
+}
 
 //start of the main Process
-let player1 = new Player();
-let player2 = new Player();
+
+//creating player one and two
+let player1 = new Player('Player 1');
+let player2 = new Player('Player 2');
+//creating a new (empty) deck of cards
 let deck = new Deck();
+//filling the deck of cards with standard 52 cards
 deck.fillDeck();
-deck.listAllCards();
-for(i = 26; i >= 1; i --) {
-    player1.hand.push(deck.cards.splice((Math.floor(Math.random() * (deck.length - 1) + 1), 1)));
-    player2.hand.push(deck.cards.splice(i, 1));
+//the deck needs to be shuffled
+deck.cards.sort(getRandomSortValue);
+//lets split the deck into two equal parts
+player1.hand = deck.cards.splice(0, 26);
+player2.hand = deck.cards.splice(-26);
+//now lets pit the top of each players hand against each other for 26 times
+let card1 = null;
+let card2 = null;
+for(i = 1; i <= 26; i ++) {
+    card1 = player1.hand.shift();
+    card2 = player2.hand.shift();
+    //if player one has the better card
+    if(card1.value > card2.value) {
+        player1.incrementScore();
+        console.log("Player 1's card is");
+        card1.describe();
+        console.log("Player 2's card is");
+        card2.describe();
+        console.log(`----------------------------------------------------`);
+    }
+    //vise versa 
+    else if(card2.value > card1.value) {
+        player2.incrementScore();
+        console.log("Player 1's card is");
+        card1.describe();
+        console.log("Player 2's card is");
+        card2.describe();
+        console.log(`----------------------------------------------------`);
+    }
 }
-player1.listAllCards();
+player1.printScore();
+player2.printScore();
+
+if(player1.score > player2.score) {
+    alert('Player 1 wins!');
+}else if(player1.score < player2.score) {
+    alert('Player 2 wins!');
+}else{
+    alert("It's a draw");
+}
