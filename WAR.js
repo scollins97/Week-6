@@ -62,9 +62,6 @@ class Deck{
             }
         }
     }
-    //incomplete. I need to come up with a way to shuffle these
-    shuffle() {
-    }
     draw() {
         return this.cards.shift();
     }
